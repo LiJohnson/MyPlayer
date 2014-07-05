@@ -519,7 +519,6 @@
 				var y = e.pageY - offset.top;
 				var deg = getDeg(x,y,offset,e);
 				player.progress(deg/360);
-				$player.find(".tick").css("transform","rotate("+(deg)+"deg)");
 			});
 			$player.find(".progress").hover(function(){
 				stopTick = true;
