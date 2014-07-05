@@ -67,17 +67,19 @@
 			});
 			$("input[type=url]").change(function(){
 				this.value && player.play(this.value);
-				
 			});
+			player.on("error",function(){
+				$("input[type=url]").val("");
+			})
+			player.play($("input[type=url]").val());
 		});
 		</script>
 		<title>myPlayer</title>
 	</head>
 	<body>
 		<div class="container" >
-			<button class="btn btn-default">toggle</button>
-			<input type="url" value="http://lcs.com/sae/shit//Kelly%20Clarkson-Because%20Of%20You-Because%20Of%20You-320.mp3" placeholder="music url" >
-			<input type="file" />
+			<button class="btn btn-default">play/pause</button>
+			<input type="url" value="http://lcs.com/sae/shit//Kelly%20Clarkson-Because%20Of%20You-Because%20Of%20You-320.mp3" placeholder="enter music url" >or<input type="file" />
 			<br>
 			<canvas width=500 height=260 id="canvas" ></canvas>
 			<br>
