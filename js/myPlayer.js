@@ -467,12 +467,13 @@
 				timeId = setInterval(function(){
 					player.volume(player.volume()+offset);
 				},100);
+				player.volume(player.volume()+offset);
 			};
 			$player.on("mousedown",".btn.vol-up",function(){
 				updateVolume(1);
 			}).on("mousedown",".btn.vol-down",function(){
 				updateVolume(-1);
-			}).on("mouseup",function(){
+			}).add(window).on("mouseup",function(){
 				clearInterval(timeId);
 			});
 		})();
@@ -487,7 +488,7 @@
 				!lock && $player.find(".tick").css("transform","rotate("+(data.progress*360)+"deg)");
 			});
 
-			$(window).on("mouseup",function(){
+			$player.add($(window)).on("mouseup",function(){
 				lock = false;
 			});
 			$player.on("mousedown",".progress",function(){

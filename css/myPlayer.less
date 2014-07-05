@@ -9,7 +9,7 @@
 }
 
 .my-player{
-	@player-width:300px;
+	@player-width:200px;
 	@player-height:@player-width;
 	@disk-width:@player-height;
 	@btn-z-index:4;
@@ -67,12 +67,7 @@
 				max-width: 100%;
 			}
 		}
-		/*
-		&.stop{
-			.animation-play-state(paused);
-			.transform(rotate(33deg));
-		}
-		*/
+
 		img{
 			display: none;
 		}	
@@ -189,7 +184,8 @@
 		background: #720909;
 		border-radius: 50%;
 		z-index: 2;
-
+		.transition();
+		.transform(rotate(-21deg));
 		.touch-panel{
 			@border: @control-width*0.25 solid black;
 			@touch-panel-width: @disk-width*0.66*0.5;
@@ -198,9 +194,7 @@
 			right: @control-width*0.5 - @control-width*0.25*0.5;
 			width: @touch-panel-width;
 			height:@touch-panel-width*2;
-			.transform-origin(right top);
-			.transform(rotate(-21deg));
-			.transition();
+			
 			.touch-1 , .touch-2 , .touch-3{
 				position: absolute;
 				width: 0;
@@ -268,12 +262,14 @@
 				.animation-play-state(running);
 			}
 		}
-		.touch-panel{
+		.control{
 			.transform(rotate(5deg));
-			.touch-2{
-				//.animation(control-tick .2s linear infinite );
+			.touch-panel{
+				.transform-origin(right top);
+				.animation(touch-panel-tick .2s linear infinite )
 			}
 		}
+		
 		.light{
 			.animation(light-tick 1s linear infinite );
 		}
@@ -310,15 +306,15 @@
 	}
 }
 
-.control-tick(){
+.touch-panel-tick(){
 	00%  {
-		.transform(rotate(-45deg));
+		.transform(rotate(1deg));
 	}
 	50% {
-		.transform(rotate(-45deg));
+		.transform(rotate(0deg));
 	}
 	100%  {
-		.transform(rotate(-45deg));
+		.transform(rotate(1deg));
 	}
 }
 @-webkit-keyframes roll-disk{
@@ -333,6 +329,6 @@
 @-webkit-keyframes light-tick{
 	.light-tick();	
 }
-@-webkit-keyframes control-tick{
-	.control-tick();	
+@-webkit-keyframes touch-panel-tick{
+	.touch-panel-tick();	
 }
