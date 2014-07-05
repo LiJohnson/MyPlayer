@@ -478,23 +478,48 @@
 			});
 		})();
 
-		//progress
+		//progress( todo : page zoom ?)
 		(function(){
 			var lock = false;
-			var width = $player.width();
-			var height = $player.height();
+			var stopTick = false;
+			var width = $player.width() * ( $player.css("zoom") || 1 );
+			var height = $player.height() * ( $player.css("zoom") || 1 ) ;
+			//var 
+			var getDeg = function(x,y){
+				x = x - width * 0.5;
+				y = y - height * 0.5;
+				var deg = 180*Math.atan(y/x)/Math.PI;
+				
+				deg +=  ( x > 0 ? 90 : 270 );
+
+				return deg;
+			};
 
 			player.on("progress",function(data){
-				!lock && $player.find(".tick").css("transform","rotate("+(data.progress*360)+"deg)");
+				!stopTick && $player.find(".tick").css("transform","rotate("+(data.progress*360)+"deg)");
 			});
 
 			$player.add($(window)).on("mouseup",function(){
 				lock = false;
+				$player.find(".time").removeClass("show");
 			});
+
 			$player.on("mousedown",".progress",function(){
 				lock = true;
+				$player.find(".time").addClass("show");
 			}).on("mousemove",function(e){
 				if(!lock)return;
+				var offset = $player.offset();
+				var x = e.pageX - offset.left;
+				var y = e.pageY - offset.top;
+				var deg = getDeg(x,y,offset,e);
+				player.progress(deg/360);
+				$player.find(".tick").css("transform","rotate("+(deg)+"deg)");
+			});
+			$player.find(".progress").hover(function(){
+				stopTick = true;
+			},function(){
+				stopTick = false;
 			});
 		})();
 	};
