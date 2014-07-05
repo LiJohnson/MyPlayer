@@ -494,9 +494,14 @@
 
 				return deg;
 			};
-
+			var timeId = 0 ;
 			player.on("progress",function(data){
-				!stopTick && $player.find(".tick").css("transform","rotate("+(data.progress*360)+"deg)");
+				timeId && clearTimeout(timeId);
+				timeId = setTimeout(function(){
+					timeId = 0;				
+					!stopTick && $player.find(".tick").css("transform","rotate("+(data.progress*360)+"deg)");
+					$player.find(".control").css("transform","rotate("+(-10 + data.progress*25)+"deg)");
+				},11);
 			});
 
 			$player.add($(window)).on("mouseup",function(){

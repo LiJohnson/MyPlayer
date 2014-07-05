@@ -185,7 +185,7 @@
 		border-radius: 50%;
 		z-index: 2;
 		.transition();
-		.transform(rotate(-21deg));
+		.transform(rotate(-21deg)) ;
 		.touch-panel{
 			@border: @control-width*0.25 solid black;
 			@touch-panel-width: @disk-width*0.66*0.5;
@@ -247,7 +247,9 @@
 		z-index: -10000;
 	}
 	&.off{
-
+		.control{
+			.transform(rotate(-21deg)) !important;
+		}
 	}
 
 	&.on{
