@@ -454,9 +454,8 @@
 			};
 			return function(data){
 				var curTime = Math.floor(data.cur/60);
-				$player.find(".progress-bar").css("width", data.progress*100 + "%" );
 				$player.find(".time").text( format( data.cur/60 ) + ":" + format( data.cur%60 ) );
-				$player.find(".tick").css("transform","rotate("+(data.progress*360)+"deg)")
+				
 			};
 		})());
 
@@ -473,6 +472,24 @@
 		}).on("click","time",function(){
 
 		});
+
+		//progress
+		(function(){
+			var lock = false;
+			var center = {};
+			player.on("progress",function(data){
+				!lock && $player.find(".tick").css("transform","rotate("+(data.progress*360)+"deg)");
+			});
+
+			$(window).on("mouseup",function(){
+				lockk = false;
+			});
+			$player.on("mousedown",".progress",function(){
+				lock = true;
+			}).on("mousemove",function(e){
+
+			});
+		})();
 	};
 	window.MyPlayerUI = MyPlayerUI;
 })();

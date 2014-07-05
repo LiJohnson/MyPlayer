@@ -12,7 +12,9 @@
 	@player-width:600px;
 	@player-height:@player-width;
 	@disk-width:@player-height;
-
+	@btn-z-index:4;
+	@tick-z-index:5;
+	@play-z-index:6;
 	position: relative;
 	width: @player-width;
 	height: @player-height;
@@ -80,6 +82,7 @@
 		text-align: center;
 		font-size: @disk-width*0.2;
 		cursor: pointer;
+		z-index: @btn-z-index;
 		&:hover{
 			opacity: 0.8;
 		}
@@ -87,6 +90,7 @@
 	.play{
 		top: @disk-width*0.4 - 1;
 		left:@disk-width*0.4 - 1;
+		z-index:@play-z-index;
 		span:before{
 			content: "\e072";
 		}
@@ -137,13 +141,27 @@
 
 	}
 	.tick{
+		@tick-width:@disk-width*0.05;
 		position: absolute;
 		top:-2px;
 		left: @disk-width*0.475;
-		width: @disk-width*0.05;
+		width:@tick-width;
 		height: 100%;
 		border-top: 2px solid gray ;
-		z-index: -1;
+		z-index: @tick-z-index;
+		.progress{
+			width:@tick-width;
+			height: @tick-width*0.5;
+			top: 0;
+			left: 0;
+			border-radius: 25%;
+			background: rgba(201, 201, 201, 0.9);
+			opacity: 0.001;
+			cursor: move;
+			&:hover{
+				opacity: 1;
+			}
+		}
 	}
 	.control{
 		@control-width:@disk-width*0.15 * 0.5;
