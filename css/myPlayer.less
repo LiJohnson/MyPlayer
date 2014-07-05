@@ -1,0 +1,306 @@
+@import "pre.less";
+
+@import (less)"normalize.css";
+@import (less)"bootstrap.css";
+
+.transition( @prop : all , @dur: 0.3s , @fun:ease-in-out,@delay:0){
+	.pre(transition , @dur @fun @delay);
+	.pre(transition-property, @prop);
+}
+
+.my-player{
+	@player-width:200px;
+	@player-height:@player-width;
+	@disk-width:@player-height;
+
+	position: relative;
+	width: @player-width;
+	height: @player-height;
+	.glyphicon;
+	.hide{
+		display: none;
+	}
+	.disk{
+		position: absolute;
+		left: 0;
+		top: 0;
+		display: inline-block;
+		width: @disk-width*0.1;
+		height: @disk-width*0.1;
+		border: @disk-width*0.45 solid ;
+		border-radius: 50%;
+		background: #838383;
+		opacity: 0.7;
+		overflow: hidden;
+		border-color:rgb(71, 71, 71) rgb(51, 51, 51) rgb(128, 128, 128) rgb(43, 43, 43);
+		.animation(roll-disk .15s  linear infinite );
+		.animation-play-state(paused);
+
+		&:hover{
+			opacity: 0.8;
+		}
+		
+		
+		&.style1{
+			.animation-duration(0.1s);
+		}
+		
+		&.picture{
+			width: @disk-width;
+			height: @disk-width;
+			border: none;
+			.animation(roll-picture 3s  linear infinite );
+			.animation-play-state(paused);
+			img{
+				display: block;
+				
+				max-width: 100%;
+			}
+		}
+		/*
+		&.stop{
+			.animation-play-state(paused);
+			.transform(rotate(33deg));
+		}
+		*/
+		img{
+			display: none;
+		}	
+	}
+	.btn{
+		position: absolute;
+		width: @disk-width*0.2;
+		height: @disk-width*0.2;
+		
+		//background: gray;
+		//border:1px solid white;
+		//border-radius: 50%;
+		opacity: 0.1;
+
+		text-align: center;
+		font-size: @disk-width*0.2;
+		cursor: pointer;
+		&:hover{
+			opacity: 0.8;
+		}
+	}
+	.play{
+		top: @disk-width*0.4 - 1;
+		left:@disk-width*0.4 - 1;
+		span:before{
+			content: "\e072";
+		}
+		&.pause{
+			span:before{
+				content: "\e073";
+			}
+		}
+	}
+	.next{
+		top: @disk-width*0.4 - 1;
+		left:@disk-width*0.8;
+		span:before{
+			content: "\e075";
+		}
+	}
+	.prev{
+		top: @disk-width*0.4 - 1;
+		left:0;
+		span:before{
+			content: "\e071";
+		}
+	}
+	.vol-up{
+		top: 0;
+		left:@disk-width*0.4 - 1;
+		span:before{
+			content: "\e038";
+		}
+	}
+	.vol-down{
+		bottom: 0; 
+		left:@disk-width*0.4 - 1;
+		span:before{
+			content: "\e037";
+		}
+	}
+	.time{
+		position: absolute;
+		top: @disk-width*0.6;
+		left:0;
+		width: @disk-width;
+		text-align: center;
+		font-size: @disk-width*0.12;
+		color: #ddd;
+		.text-fill-color(rgb(0, 0, 0));
+		.text-stroke-width(1px);
+
+	}
+	.tick{
+		position: absolute;
+		top:-2px;
+		left: @disk-width*0.475;
+		width: @disk-width*0.05;
+		height: 100%;
+		border-top: 2px solid gray ;
+		z-index: -1;
+	}
+	.control{
+		@control-width:@disk-width*0.15 * 0.5;
+		@control-border:@disk-width*0.15 * 0.25;
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		width:@control-width;
+		height:@control-width;
+		border:@control-border solid black;
+		background: #720909;
+		border-radius: 50%;
+		z-index: 2;
+
+		.touch-panel{
+			@border: @control-width*0.25 solid black;
+			@touch-panel-width: @disk-width*0.66*0.5;
+			position: absolute;
+			top: @control-width*0.5 ;
+			right: @control-width*0.5 - @control-width*0.25*0.5;
+			width: @touch-panel-width;
+			height:@touch-panel-width*2;
+			.transform-origin(right top);
+			.transform(rotate(-21deg));
+			.transition();
+			.touch-1 , .touch-2 , .touch-3{
+				position: absolute;
+				width: 0;
+				height: 0;
+				border: none;
+				border-radius: 50%;
+			}
+
+			.touch-1{
+				top: 0;
+				right:0;
+				height: 75%;
+				border-left: @border;
+			}
+			.touch-2{
+				top: 75%;
+				right:0;
+				width: 75%;
+				border-top: @border;
+				.transform-origin(right top);
+				.transform(rotate(-45deg) translate(0 ,-@control-width*0.25));
+
+				.touch-3{
+					top: -@touch-panel-width*0.2;
+					left:25%;
+					height: @touch-panel-width*0.25;
+					width: 1px;
+					background: black;
+					.transform(rotate(-30deg));
+				}
+			}
+
+		}
+	}
+	.light{
+		@light-width:@disk-width*0.04;
+		position: absolute;
+		top:@disk-width*0.125 - @light-width;
+		left: @disk-width*0.125 - @light-width;
+		width:@light-width;
+		height:@light-width;
+		border-radius: 50%;
+		background: #910000;
+
+	}
+	>canvas{
+		position: absolute;
+		top:0;
+		left: 0;
+		z-index: -10000;
+	}
+	&.off{
+
+	}
+
+	&.on{
+		.play{
+			span:before{
+				content: "\e073";
+			}
+		}
+		.disk{
+			.animation-play-state(running);
+			&.picture{
+				.animation-play-state(running);
+			}
+		}
+		.touch-panel{
+			.transform(rotate(5deg));
+			.touch-2{
+				//.animation(control-tick .2s linear infinite );
+			}
+		}
+		.light{
+			.animation(light-tick 1s linear infinite );
+		}
+	}
+}
+
+.roll-disk(){
+	00%  {.transform(rotate(0deg));}
+	100% {.transform(rotate(360deg*3));}
+	
+}
+.roll-stop(){
+	00%  {.transform(rotate(0deg));}
+	100% {.transform(rotate(360deg));}
+	
+}
+.roll-picture(){
+	00%  {.transform(rotate(0deg));}
+	100% {.transform(rotate(360deg));}
+	
+}
+.light-tick(){
+	00%  {
+		.box-shadow(rgb(187, 0, 0) 3px 3px 6px 0px);
+		background-color: rgb(214, 11, 0);
+	}
+	50% {
+		.box-shadow(none);
+		background-color: #910000;
+	}
+	100%  {
+		.box-shadow(rgb(187, 0, 0) 3px 4px 6px 0px);
+		background-color: rgb(214, 11, 0);
+	}
+}
+
+.control-tick(){
+	00%  {
+		.transform(rotate(-45deg));
+	}
+	50% {
+		.transform(rotate(-45deg));
+	}
+	100%  {
+		.transform(rotate(-45deg));
+	}
+}
+@-webkit-keyframes roll-disk{
+	.roll-disk();
+}
+@-webkit-keyframes roll-stop{
+	.roll-stop();
+}
+@-webkit-keyframes roll-picture{
+	.roll-picture();	
+}
+@-webkit-keyframes light-tick{
+	.light-tick();	
+}
+@-webkit-keyframes control-tick{
+	.control-tick();	
+}

@@ -1,0 +1,97 @@
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+
+		<link  type="image/x-icon" rel="shortcut icon" href="javascript:;">
+		<!-- 
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="http://lcs.com/sae/gtbcode/1/js/jquery.plugin.js"></script>
+		<script src="angular.js"></script>
+
+		-->
+		<link rel="stylesheet" href="../css/myPlayer.css">
+		
+		<script src="http://1.gtbcode.sinaapp.com/js/jquery.js"></script>
+		<script src="../js/myPlayer.js"></script>
+		<script>
+		$(function(){
+			var player =window.player = new MyPlayer();
+			var MAX = 0;
+			var getV = function(canvas){
+				var context = canvas.getContext("2d");
+				var len = canvas.width;
+				var max = [];
+				context.fillRect(0,0,canvas.width,1);
+				return function(data){
+					//console.log(data);
+					context.clearRect(0, 1, canvas.width, canvas.height);
+
+					for(var i = 0 ; i < len ; i++){
+						var h = data[ Math.floor( data.length*i/len ) ];
+						if( MAX < h ){
+							MAX = h ;
+							console.log("MAX",MAX);
+						}
+						max[i] = (max[i]||0);
+						max[i] = max[i] < h ? h : max[i];
+						context.fillStyle="black";
+						context.fillRect(i,canvas.height,1,-h );
+
+						h = canvas.height-max[i];
+
+						context.fillStyle="red";
+						context.fillRect(i,h > canvas.height ? canvas.height : h,1,-1 );
+						
+						max[i]-=1.5;
+					}
+				};
+			};
+			var $disk = $(".disk");
+
+			player.on("playing",function(song,e){
+				console.log("playing");
+				if( song.picture ){
+					$disk.addClass("picture").css("background-image","url("+song.picture+")")
+				}else{
+					$disk.removeClass("picture").css("background-image","none")
+				}
+			});
+			player.on("play",function(){
+				console.log("play");
+			}).on("analyser",getV(canvas)).on("analyser",getV(canvas2)).on("analyser",getV(canvas3)).volume(60);
+
+
+			$(".btn").click(function(){
+				player.isPlaying() ? player.pause() : player.play($("input[type=url]").val());
+			});
+
+			$("input[type=file]").change(function(){
+				player.play(URL.createObjectURL(this.files[0]));
+				
+			});
+			$("input[type=url]").change(function(){
+				this.value && player.play(this.value);
+				
+			});
+		});
+		</script>
+		<title>myPlayer</title>
+	</head>
+	<body>
+		<div class="container" >
+			<button class="btn btn-default">toggle</button>
+			<input type="url" value="http://lcs.com/sae/shit//Kelly%20Clarkson-Because%20Of%20You-Because%20Of%20You-320.mp3" placeholder="music url" >
+			<input type="file" />
+			<br>
+			<canvas width=500 height=260 id="canvas" ></canvas>
+			<br>
+			<canvas width=1000 height=260 id="canvas2" ></canvas>
+			<br>
+			<canvas width=1600 height=260 id="canvas3" ></canvas>
+		</div>
+	</body>
+</html>
