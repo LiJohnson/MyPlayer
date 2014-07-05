@@ -9,12 +9,20 @@
 }
 
 .my-player{
-	@player-width:600px;
+	@player-width:300px;
 	@player-height:@player-width;
 	@disk-width:@player-height;
 	@btn-z-index:4;
 	@tick-z-index:5;
 	@play-z-index:6;
+	
+	.text(){
+		font-size: @disk-width*0.12;
+		color: #ddd;
+		.text-fill-color(rgb(0, 0, 0));
+		.text-stroke-width(1px);
+	}
+
 	position: relative;
 	width: @player-width;
 	height: @player-height;
@@ -128,16 +136,22 @@
 			content: "\e037";
 		}
 	}
+	.vol-num{
+		position: absolute;
+		top: @disk-width*0.45;
+		width: @disk-width;
+		text-align: center;
+		opacity: .8;
+		.text();
+
+	}
 	.time{
 		position: absolute;
 		top: @disk-width*0.6;
 		left:0;
 		width: @disk-width;
 		text-align: center;
-		font-size: @disk-width*0.12;
-		color: #ddd;
-		.text-fill-color(rgb(0, 0, 0));
-		.text-stroke-width(1px);
+		.text();
 
 	}
 	.tick{

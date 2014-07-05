@@ -1,23 +1,5 @@
 (function(){
 	'use strict';
-	/*
-	Object.prototype.typeof = (function(un) {
-		var types = {};
-		var obj = [1, "", {}, [], new Date(), function() {}, /a/, un, null];
-		
-		for (var i in obj) {
-			var type = Object.prototype.toString.call(obj[i]);
-			types[type] = type.split(" ")[1].replace("]", "").toLowerCase();
-		}
-	 
-		obj = null;
-		return function() {
-			var value = arguments.length ? arguments[0] : this;
-			return types[Object.prototype.toString.call(value)] || typeof value;
-		};
-	})();
-*/
-	
 
 	var extend = function(v1,v2){
 		v1 = v1 || {};
@@ -457,6 +439,16 @@
 				$player.find(".time").text( format( data.cur/60 ) + ":" + format( data.cur%60 ) );
 				
 			};
+		})()).on("volume",(function(){
+			var timeId = 0;
+			return function(volume){
+				$player.find(".vol-num").stop().fadeIn().text(Math.floor(volume));
+
+				timeId && clearTimeout(timeId);
+				timeId = setTimeout(function(){
+					$player.find(".vol-num").stop().fadeOut();
+				},1000);
+			}
 		})());
 
 		$player.on("click",".btn.play",function(){
@@ -465,29 +457,43 @@
 			player.next();
 		}).on("click",".btn.prev",function(){
 			player.prev();
-		}).on("click",".btn.vol-up",function(){
-			player.volume(player.volume()+1);
-		}).on("click",".btn.vol-down",function(){
-			player.volume(player.volume()-1);
-		}).on("click","time",function(){
-
 		});
+
+		//volume
+		(function(){
+			var timeId = 0;
+			var updateVolume = function( offset ){
+				offset = offset || 1;
+				timeId = setInterval(function(){
+					player.volume(player.volume()+offset);
+				},100);
+			};
+			$player.on("mousedown",".btn.vol-up",function(){
+				updateVolume(1);
+			}).on("mousedown",".btn.vol-down",function(){
+				updateVolume(-1);
+			}).on("mouseup",function(){
+				clearInterval(timeId);
+			});
+		})();
 
 		//progress
 		(function(){
 			var lock = false;
-			var center = {};
+			var width = $player.width();
+			var height = $player.height();
+
 			player.on("progress",function(data){
 				!lock && $player.find(".tick").css("transform","rotate("+(data.progress*360)+"deg)");
 			});
 
 			$(window).on("mouseup",function(){
-				lockk = false;
+				lock = false;
 			});
 			$player.on("mousedown",".progress",function(){
 				lock = true;
 			}).on("mousemove",function(e){
-
+				if(!lock)return;
 			});
 		})();
 	};
