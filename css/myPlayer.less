@@ -226,6 +226,15 @@
 					width: 1px;
 					background: black;
 					.transform(rotate(-30deg));
+
+					.light{
+						@light-width:@disk-width*0.15*0.051;
+						top:100%;
+						right: -@light-width * 0.5;
+						width: @light-width;
+						height: @light-width;
+
+					}
 				}
 			}
 		}
