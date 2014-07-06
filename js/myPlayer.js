@@ -449,7 +449,9 @@
 					$player.find(".vol-num").stop().fadeOut();
 				},1000);
 			}
-		})());
+		})()).on("mute",function(mute){
+			$player.toggleClass('mute',mute);
+		});
 
 		$player.on("click",".btn.play",function(){
 			player.isPlaying() ? player.pause() : player.play();
@@ -465,12 +467,17 @@
 			var updateVolume = function( offset ){
 				offset = offset || 1;
 				clearInterval(timeId);
+				var speed = 1;
 				timeId = setInterval(function(){
-					player.volume(player.volume()+offset);
-				},100);
-				player.volume(player.volume()+offset);
+					player.volume(player.volume()+offset * speed );
+					speed += speed < 3 ? 0.1 : 0;
+				},200);
+				player.volume() && player.volume(player.volume()+offset);
 			};
-			$player.on("mousedown",".btn.vol-up",function(){
+			$player.on("dblclick",".btn.vol-up , .btn.vol-down",function(){
+				clearInterval(timeId);
+				player.mute();
+			}).on("mousedown",".btn.vol-up",function(){
 				updateVolume(1);
 			}).on("mousedown",".btn.vol-down",function(){
 				updateVolume(-1);

@@ -276,6 +276,13 @@
 			.animation(light-tick 1s linear infinite );
 		}
 	}
+	&.mute{
+		.vol-down , .vol-up{
+			span:before{
+				content: "\e036";
+			}
+		}
+	}
 }
 
 .roll-disk(){
