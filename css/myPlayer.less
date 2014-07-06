@@ -9,13 +9,15 @@
 }
 
 .my-player{
-	@player-width:200px;
+	@player-width:600px;
 	@player-height:@player-width;
 	@disk-width:@player-height;
+
+	@control-z-index:3;
 	@btn-z-index:4;
 	@tick-z-index:5;
 	@play-z-index:6;
-	
+
 	.text(){
 		font-size: @disk-width*0.12;
 		color: #ddd;
@@ -183,7 +185,7 @@
 		border:@control-border solid black;
 		background: #720909;
 		border-radius: 50%;
-		z-index: 2;
+		z-index: @control-z-index;
 		.transition();
 		.transform(rotate(-21deg)) ;
 		.touch-panel{
@@ -226,20 +228,21 @@
 					.transform(rotate(-30deg));
 				}
 			}
+		}
+
+		.light{
+			@light-width:@disk-width*0.04;
+			position: absolute;
+			top:(@control-width - @light-width) * 0.5;
+			right:(@control-width - @light-width) * 0.5;
+			width:@light-width;
+			height:@light-width;
+			border-radius: 50%;
+			background: #910000;
 
 		}
 	}
-	.light{
-		@light-width:@disk-width*0.04;
-		position: absolute;
-		top:@disk-width*0.125 - @light-width;
-		left: @disk-width*0.125 - @light-width;
-		width:@light-width;
-		height:@light-width;
-		border-radius: 50%;
-		background: #910000;
-
-	}
+	
 	>canvas{
 		position: absolute;
 		top:0;
