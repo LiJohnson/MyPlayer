@@ -252,7 +252,7 @@
 			}
 		};
 
-		this.mixer = (function(){
+		this.mute = (function(){
 			var val = 0;
 			return function(){
 				if( this.volume() == 0 ){
@@ -261,7 +261,7 @@
 					val = this.volume();
 					this.volume(0);
 				}
-				trigger("mixer" , this.volume() == 0);
+				trigger("mute" , this.volume() == 0);
 				return this;
 			};
 		})();
