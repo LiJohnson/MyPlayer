@@ -312,7 +312,7 @@
 
 				timeId = setInterval(function(){
 					triggerProgress();
-				},1000);
+				},100);
 
 				triggerProgress();
 			});
