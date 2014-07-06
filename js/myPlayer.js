@@ -231,7 +231,7 @@
 			if( val == void 0 ){
 				return audio.volume*100;
 			}else{
-				val = Math.abs(val) || 0;
+				val = val*1 || 0;
 				val = val < 0 ? 0 : val;
 				val = val > 100 ? 100 : val;
 				audio.volume = val/100;
@@ -464,6 +464,7 @@
 			var timeId = 0;
 			var updateVolume = function( offset ){
 				offset = offset || 1;
+				clearInterval(timeId);
 				timeId = setInterval(function(){
 					player.volume(player.volume()+offset);
 				},100);
