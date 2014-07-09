@@ -384,6 +384,7 @@
 
 		var canvas = this.$player.find("canvas")[0];
 		var context = canvas.getContext("2d");
+		var stor = new Storage("myPlayer");
 
 		canvas.width = this.$player.width();
 		canvas.height = this.$player.height();
@@ -441,8 +442,11 @@
 			};
 		})()).on("volume",(function(){
 			var timeId = 0;
+			stor.get("volume") && player.volume(stor.get("volume"));
 			return function(volume){
-				$player.find(".vol-num").stop().fadeIn().text(Math.floor(volume));
+				volume = Math.floor(volume);
+				stor.set("volume",volume);
+				$player.find(".vol-num").stop().fadeIn().text(volume);
 
 				timeId && clearTimeout(timeId);
 				timeId = setTimeout(function(){
