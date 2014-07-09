@@ -476,6 +476,7 @@
 					player.volume(player.volume()+offset * speed );
 					speed += speed < 3 ? 0.1 : 0;
 				},200);
+				//防止静音时的操作
 				player.volume() && player.volume(player.volume()+offset);
 			};
 			$player.on("dblclick",".btn.vol-up , .btn.vol-down",function(){
