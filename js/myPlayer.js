@@ -463,6 +463,12 @@
 			player.next();
 		}).on("click",".btn.prev",function(){
 			player.prev();
+		}).on("change","input[type=file]",function(){
+			if(!this.files)return;
+			for( var i = 0 , f ; f = this.files[i]  ; i++){
+				player.add(URL.createObjectURL(f));
+			}
+			this.value="";
 		});
 
 		//volume

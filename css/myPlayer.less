@@ -252,6 +252,30 @@
 
 		}
 	}
+	.file{
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: @disk-width * 0.1;
+		height: @disk-width * 0.1;
+		cursor: pointer;
+		overflow: hidden;
+		&:before{
+			content: "\e118";
+			font-size: @disk-width * 0.07;
+		}
+
+		input{
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: block;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			cursor: pointer;
+		}
+	}
 	
 	>canvas{
 		position: absolute;
