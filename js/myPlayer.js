@@ -466,7 +466,15 @@
 		}).on("change","input[type=file]",function(){
 			if(!this.files)return;
 			for( var i = 0 , f ; f = this.files[i]  ; i++){
-				player.add(URL.createObjectURL(f));
+				var song = { url:URL.createObjectURL(f), title:f.name};
+				try{
+					new ID3(f).getData(function(list,map){
+						song.picture = (map["APIC"]||{}).text;
+						player.add(song);
+					});
+				}catch(e){
+					player.add(song);
+				}
 			}
 			this.value="";
 		});
