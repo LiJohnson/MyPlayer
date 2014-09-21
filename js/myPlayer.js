@@ -211,7 +211,7 @@
 
 		this.clear = function(){
 			list = [];
-			triggrt("clear");
+			trigger("clear");
 		};
 
 		this.playMode = (function($this){
