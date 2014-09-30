@@ -108,6 +108,7 @@
 					a.src = song.url;
 					song.url = a.src;
 				}
+				song.url = song.url.trim();
 				return song;
 			}
 		})();
