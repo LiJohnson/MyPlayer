@@ -465,8 +465,8 @@
 		}).on("click",".btn.prev",function(){
 			player.prev();
 		}).on("change","input[type=file]",function(){
-			if(!this.files)return;
-			for( var i = 0 , f ; f = this.files[i]  ; i++){
+			var files = this.files || [] , i = 0 ;
+			var addFile = function(f){
 				var song = { url:URL.createObjectURL(f), title:f.name};
 				try{
 					new ID3(f).getData(function(list,map){
@@ -476,7 +476,13 @@
 				}catch(e){
 					player.add(song);
 				}
+			};
+
+			while( files[i] ){
+				addFile( files[i] );
+				i++;
 			}
+
 			this.value="";
 		});
 
