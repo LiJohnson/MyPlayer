@@ -97,7 +97,12 @@
 				if( typeof song == "string" ){
 					song = extend( extend( {} , defaultValue ) , {url:song} );
 				}else if( typeof song == "object" ){
-					song = song.formated ? song :  extend( extend( {formated:true} , defaultValue ) ,song );
+					if( !song.formated ){
+						song.formated  = true;
+						for( var k in defaultValue ){
+							song[k] = song[k] || defaultValue[k];
+						}
+					}
 				}else{
 					throw("no song");
 				}
@@ -468,13 +473,12 @@
 			var files = this.files || [] , i = 0 ;
 			var addFile = function(f){
 				var song = { url:URL.createObjectURL(f), title:f.name};
+				player.add(song);
 				try{
 					new ID3(f).getData(function(list,map){
 						song.picture = (map["APIC"]||{}).text;
-						player.add(song);
 					});
 				}catch(e){
-					player.add(song);
 				}
 			};
 
